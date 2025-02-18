@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let users = [];
+      
+      function deleteUser(index) {
+        users.splice(index, 1);
+        showUsers();
+      }
+      
+      function showForm(){
+        data.innerHTML= `
+        <h1>New User Signup Form</h1>
+        <p><input type="text" id="name" placeholder="Name" /></p>
+        <p><input type="text" id="email" placeholder="Email" /></p>
+        <p><input type="password" id="password" placeholder="Password" /></p>
+        <p><input type="date" id="dob" /></p>
+        <button onclick="addUser()">Register</button>`
+      }
+      
+      function showUsers() {
+        let length = users.length;
+        let str = "";
+        for (let i = 0; i < length; i++) {
+          str += `<div>
+                    ${users[i].name}-
+                    ${users[i].email}-
+                    ${users[i].password}-
+                    ${users[i].dob}-
+                    <button onclick='deleteUser(${i})'>Delete</button>
+                    </div>`;
+        }
+        data.innerHTML = str;
+      }
+      
+      function addUser() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        let dob = document.getElementById("dob").value;
+        let user = {
+          name: name,
+          email: email,
+          password: password,
+          dob: dob,
+        };
+        users.push(user);
+        showLoginForm();
+      }
+      
+      function showLoginForm() {
+        data.innerHTML = `
+        <h1>Login Page</h1>
+        <p><input type="text" id="loginEmail" placeholder="Email" /></p>
+        <p><input type="password" id="loginPassword" placeholder="Password" /></p>
+        <button onclick="loginUser()">Login</button>`;
+      }
+      
+      function loginUser() {
+  let email = document.getElementById("loginEmail").value;
+  let password = document.getElementById("loginPassword").value;
+  let user = users.find(u => u.email === email && u.password === password);
+  if (user) {
+    data.innerHTML = `<h1>Welcome Sir ${user.name}!</h1>
+                      <button onclick='showLoginForm()'>Logout</button>`;
+  }  else {
+  data.innerHTML = `<div><h2>Invalid credentials</h2></div>`;
+}
+
+
+}
+
+    </script>
+  </head>
+  <body onload="showForm()">
+    <div id="data"></div>
+  </body>
+</html>
